@@ -1,0 +1,150 @@
+1 Classification Trees With Numerical Features
+
+1.1 Growing Decision Trees
+
+the average accuracy and standard deviation across the folds:
+Iris:
+      average_accuracy  std_deviation
+0.05          0.813333       0.124920
+0.10          0.806667       0.073367
+0.15          0.813333       0.112437
+0.20          0.813333       0.093227
+
+Spambase:
+      average_accuracy  std_deviation
+0.05          0.895671       0.012831
+0.10          0.885021       0.016181
+0.15          0.863943       0.015304
+0.20          0.865245       0.011521
+0.25          0.816341       0.015486
+
+1.2 Interpreting the results
+a. use best Eta 0.05 for Iris. The confusion matrix looks like:
+
+[[9 0 0]
+ [0 1 1]
+ [0 0 4]]
+
+and its classification_report:
+
+                 precision    recall  f1-score   support
+
+    Iris-setosa       1.00      1.00      1.00         9
+Iris-versicolor       1.00      0.50      0.67         2
+ Iris-virginica       0.80      1.00      0.89         4
+
+       accuracy                           0.93        15
+      macro avg       0.93      0.83      0.85        15
+   weighted avg       0.95      0.93      0.93        15
+
+The confusion matrix shows that the predicted results are almost the same with the actual classfication resluts 
+for test set. There is only one mistake in line 2. So overall the result is very accurate.
+
+b. use best Eta 0.05 for Spambase. The confusion matrix looks like:
+
+[[245  25]
+ [ 29 162]]
+
+and its classification_report:
+
+              precision    recall  f1-score   support
+
+           0       0.89      0.91      0.90       270
+           1       0.87      0.85      0.86       191
+
+    accuracy                           0.88       461
+   macro avg       0.88      0.88      0.88       461
+weighted avg       0.88      0.88      0.88       461
+
+The confusion matrix shows that the predicted results are close to the actual classfication resluts 
+for test set. There are some false classficatios but their ratio are not high(10%).
+So overall the result is very accurate.
+
+c. Generally, as Eta get smaller, the performance get better, this is mainly because the depth for the decision
+tree got increased and it make classfications more accurate. And there is no evidence showing overfitting yet.
+
+
+
+2 Classfication Trees With Categorical Features
+
+2.1 Multiway vs Binary Decision Trees
+
+the average accuracy and standard deviation across the folds:
+
+Multiway:
+      average_accuracy  std_deviation
+0.05          0.997046       0.002406
+0.10          0.994092       0.001721
+0.15          0.994092       0.003271
+
+Binary(One hot coding):
+      average_accuracy  std_deviation
+0.05          0.997046       0.001941
+0.10          0.994091       0.001722
+0.15          0.994091       0.002583
+
+Per to the results, there are no clear differences between these two implementations. Theoretically, there
+could be some differences between since we change the columns of the dataset and we change the depth 
+of the tree too. But in this paticular case, both results are very accurate and there are no clear 
+differences.
+
+2.2 Interpreting the results
+
+a. use best Eta 0.05 for Multiway. The confusion matrix looks like:
+
+[[405   1]
+ [  0 407]]
+
+and its classification_report:
+
+              precision    recall  f1-score   support
+
+           e       1.00      1.00      1.00       406
+           p       1.00      1.00      1.00       407
+
+    accuracy                           1.00       813
+   macro avg       1.00      1.00      1.00       813
+weighted avg       1.00      1.00      1.00       813
+
+use best Eta 0.05 for Binary. The confusion matrix looks like:
+
+[[419   0]
+ [  1 393]]
+
+and its classification_report:
+
+              precision    recall  f1-score   support
+
+           e       1.00      1.00      1.00       419
+           p       1.00      1.00      1.00       394
+
+    accuracy                           1.00       813
+   macro avg       1.00      1.00      1.00       813
+weighted avg       1.00      1.00      1.00       813
+
+Both confusion matrixs show that the classfication went very well causing only one misclassfication(takes up
+0.0% among all cases).
+
+b. Both of them have best Eta value 0.05. Essentianlly and conceptually, there is no difference bewteen 
+binary and multiway decision trees. The only difference(not crtical) is the depths of trees and for this 
+mushroom dataset, either shallow depth or very deep tree will make results accurate.
+
+
+
+6. Regression Trees
+
+a. the SSE using ten fold cross-validation for each value of Eta and the average and standard
+deviation across the folds:
+
+      average_sse  std_deviation
+0.05  1198.229357     443.806462
+0.10  1118.361137     489.778350
+0.15  1273.064720     428.950996
+
+b. In these results, it shows that Eta is crucial to the resulting average_sse s. 
+In fact, if I choose more values of Eta to extend the table, like 0.20, 0.25, 0.30..., the average_sse will 
+keep rising and that means results are not as accurate as before.
+The reason why Eta can affect the results hugely is mainly because that the depths of regresion trees are 
+different under different value of Eta. As Eta get smaller, the tree goes deepper, and the result become
+more accurate.
+
